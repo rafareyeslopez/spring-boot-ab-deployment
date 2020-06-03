@@ -1,0 +1,60 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: spring-boot-ab-deployment
+  namespace: sandbox
+spec:
+  selector:
+    app: spring-boot-ab-deployment
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-boot-ab-deployment
+  namespace: sandbox
+  labels:
+    app: spring-boot-ab-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-boot-ab-deployment
+  template:
+    metadata:
+      labels:
+        app: spring-boot-ab-deployment
+    spec:
+      containers:
+      - name: spring-boot-ab-deployment
+        image: spring-boot-ab-deployment:0.0.1
+        imagePullPolicy: Never
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 30
+          timeoutSeconds: 5
+          periodSeconds: 30
+          failureThreshold: 2
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 40
+          timeoutSeconds: 5
+          periodSeconds: 60
+          failureThreshold: 2        
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: "250Mi"
+            cpu: "0.05"
+          limits:
+            memory: "280Mi"           
+
