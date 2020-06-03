@@ -22,11 +22,11 @@ Now create the application package
 
 Next build the docker image
 
-    docker build -t spring-boot-ab-deployment:0.0.1 .
+    docker build -t spring-boot-blue-green-deployment:0.0.1 .
 
 In case you want to run the image just on docker
 
-    docker run --name spring-boot-ab-deployment  -p 86:8080 spring-boot-ab-deployment
+    docker run --name spring-boot-blue-green-deployment  -p 86:8080 spring-boot-blue-green-deployment
 
 Namespace "sandbox" will be used, so if does not existes lets create it
 
@@ -39,10 +39,10 @@ Then apply the deployment
 After some time the pod will be running
 
     kubectl get pods -n sandbox
-    kubectl describe pods spring-boot-ab-deployment -n sandbox
+    kubectl describe pods spring-boot-blue-green-deployment -n sandbox
 To open the endpoint exposed to see what the application does (just a simple text response)
 
-    minikube service spring-boot-ab-deployment --url -n sandbox
+    minikube service spring-boot-blue-green-deployment --url -n sandbox
     
 You should get a URL like this
 * http://192.168.239.234:31660
@@ -57,7 +57,7 @@ First of all lets do some changes in our code, for example changing the response
 
 Then lets build another image for the second version
 
-    docker build -t spring-boot-ab-deployment:0.0.2 .
+    docker build -t spring-boot-blue-green-deployment:0.0.2 .
 
 And lets apply the deployment for the second version
 
@@ -69,14 +69,14 @@ Afterwards running the following command we can see the two versions running at 
 
 Now lets get the second version endpoint to see what it does
 
-    minikube service spring-boot-ab-deployment-v2 --url -n sandbox
+    minikube service spring-boot-blue-green-deployment-v2 --url -n sandbox
 
 Now we have verified second version is running as well.
 
 To delete the pods
 
-    kubectl delete deployment spring-boot-ab-deployment -n sandbox
-    kubectl delete deployment spring-boot-ab-deployment-v2 -n sandbox
+    kubectl delete deployment spring-boot-blue-green-deployment -n sandbox
+    kubectl delete deployment spring-boot-blue-green-deployment-v2 -n sandbox
   
 
 What could be done now in some staging environment is to redirect some traffic to the second version to fully test it.

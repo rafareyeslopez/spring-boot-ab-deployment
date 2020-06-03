@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.rafareyeslopez</groupId>
-	<artifactId>spring-boot-ab-deployment</artifactId>
+	<artifactId>spring-boot-blue-green-deployment</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-boot-ab-deployment</name>
+	<name>spring-boot-blue-green-deployment</name>
 	<description>Demo for AB deployment</description>
 
 	<properties>

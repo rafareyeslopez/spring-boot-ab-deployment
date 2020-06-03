@@ -1,11 +1,11 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: spring-boot-ab-deployment
+  name: spring-boot-blue-green-deployment
   namespace: sandbox
 spec:
   selector:
-    app: spring-boot-ab-deployment
+    app: spring-boot-blue-green-deployment
   type: NodePort
   ports:
     - protocol: TCP
@@ -15,23 +15,23 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spring-boot-ab-deployment
+  name: spring-boot-blue-green-deployment
   namespace: sandbox
   labels:
-    app: spring-boot-ab-deployment
+    app: spring-boot-blue-green-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: spring-boot-ab-deployment
+      app: spring-boot-blue-green-deployment
   template:
     metadata:
       labels:
-        app: spring-boot-ab-deployment
+        app: spring-boot-blue-green-deployment
     spec:
       containers:
-      - name: spring-boot-ab-deployment
-        image: spring-boot-ab-deployment:0.0.1
+      - name: spring-boot-blue-green-deployment
+        image: spring-boot-blue-green-deployment:0.0.1
         imagePullPolicy: Never
         readinessProbe:
           httpGet:
